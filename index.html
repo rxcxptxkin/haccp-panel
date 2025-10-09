@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRAND UYSAL BEACH&SPA HOTEL HACCP FORMLARI TAKİP</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { background:#f8f8f8; font-family: 'Poppins', sans-serif; margin:0; padding:20px; text-align:center; }
+  .logo{ text-align:center; color:#7d7d7d; margin-bottom:20px; }
+  .symbol{ font-size:48px; font-weight:700; letter-spacing:2px; color:#7d7d7d; }
+  .line{ border-top:2px solid #b1975b; width:100%; max-width:500px; margin:10px auto; position:relative; }
+  .line::after{ content:""; position:absolute; top:-2px; left:50%; width:30px; height:4px; background:#f8f8f8; border-left:2px solid #b1975b; border-right:2px solid #b1975b; transform:translateX(-50%); }
+  .main{ font-size:32px; font-weight:600; color:#7d7d7d; letter-spacing:3px; }
+  .sub{ font-size:20px; color:#b1975b; margin-top:8px; }
+  .panel{ max-width:420px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:left; position:sticky; top:20px; }
+  label{ display:block; margin-top:15px; font-weight:600; }
+  select,input{ width:100%; padding:12px; font-size:16px; margin-top:5px; border-radius:6px; border:1px solid #ccc; box-sizing:border-box; }
+  button{ width:100%; padding:12px; font-size:16px; margin-top:15px; background:#007BFF; color:#fff; border:none; border-radius:6px; cursor:pointer; }
+  button:hover{ background:#0056b3; }
+  #forms{ margin-top:30px; display:none; }
+  #formLinks a{ display:block; width:100%; max-width:420px; padding:12px; margin:8px auto; background:#dae0e6; color:#7d7d7d; border-radius:6px; text-decoration:none; text-align:center; font-size:16px; }
+  #formLinks a:hover{ background:#0056b3; color:#fff; }
+  #kaliteTable{ max-height:400px; overflow-y:auto; margin-top:15px; }
+  #kaliteTable table{ width:100%; border-collapse:collapse; }
+  #kaliteTable th,#kaliteTable td{ border:1px solid #ccc; padding:6px; font-size:14px; text-align:center; }
+  #kaliteTable th{ background:#b1975b; color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <div class="symbol">GU</div>
+  <div class="line"></div>
+  <div class="main">GRAND UYSAL</div>
+  <div class="sub">Beach & Spa Hotel</div>
+</div>
+
+<h2>HACCP FORMLARI TAKİP SİSTEMİ</h2>
+
+<div class="panel">
+  <label>Departman:</label>
+  <select id="department">
+    <option value="">Seçiniz</option>
+    <option value="teknik">Teknik</option>
+    <option value="mutfak">Mutfak</option>
+    <option value="fb">F & B</option>
+    <option value="hk">Housekeeping</option>
+    <option value="kalite">Kalite</option>
+  </select>
+
+  <label>Parola:</label>
+  <input type="password" id="password" placeholder="Parola">
+
+  <button type="button" onclick="login()">Giriş Yap</button>
+</div>
+
+<div id="forms">
+  <h3>Formlar</h3>
+  <div id="formLinks"></div>
+  <div id="kaliteTable"></div>
+</div>
+
+<script>
+const users = { teknik:"12345", mutfak:"12345", fb:"12345", hk:"12345", kalite:"12345" };
+
+const deptForms = {
+  teknik:[
+    { text:"TEKNİK KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSeN6sH7BMq7rZJNii9sAFn09qwB6BXkT-j8dcKs2osrT_JgpQ/viewform" },
+    { text:"LEGİONELLA FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLScBNDtbcvzLkVMO5p4McL433X3vuQOjQozNCKaX4DLJMTX-1g/viewform" }
+  ],
+  mutfak:[
+    { text:"ÜRETİM TAKİP FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSefB_db64jHSvXCmXOCto_drpW1iadP1wQwibyMoGXNbCvUJA/viewform" },
+    { text:"KASAPHANE ÇÖZÜNDÜRME FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSfwYRttBWP07MzHPTPV0_Ntgk1V9KcEBVt67lJgkg_jvOb4IA/viewform" },
+    { text:"MEYVE SEBZE DEZENFEKSİYON FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSeTqQiFf05j7uxWJCWJbG9gdPLjcaKcID2Lz41gfDheqtv8Dg/viewform?usp=dialog" },
+    { text:"TEMİZLİK KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSeecYkqXKkZIitYt1Jp9-U4yUy1OStfc2HXcAOcnRKMq0Fu3w/viewform?usp=header" }
+  ],
+  fb:[
+    { text:"BAR KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSe9iP1h2-MTi7ASwkg0FlM9ydyoxr2X8UzFBqXjmlv4WH0TjQ/viewform" },
+    { text:"BAR TEMİZLİK VE KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSev1FJrNL2PK97TeRi2x8KkX6eC56kzagjISt3SHZva_lgHcg/viewform" },
+    { text:"BUZ MAKİNESİ TEMİZLİK VE KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSdX2xgqzr5gZiNXyjKtStJp5pZqfkspHu5T2fcDCQG-_59e8A/viewform" }
+  ],
+  hk:[
+    { text:"LEGIONELLA HK", url:"https://docs.google.com/forms/d/e/1FAIpQLScDOsgB89zyUA4thzp5xPHtTzTDQRCCDrqsttPnmpTeLOQ8hg/viewform?usp=sharing&ouid=116852219320284631990" }
+  ],
+  kalite:[]
+};
+
+function login(){
+  const dept = document.getElementById("department").value;
+  const pw = document.getElementById("password").value;
+  const formsDiv = document.getElementById("forms");
+  const formLinks = document.getElementById("formLinks");
+
+  if(!dept){ alert("Lütfen departman seçiniz!"); return; }
+  if(pw !== users[dept]){ alert("Hatalı parola!"); formsDiv.style.display="none"; return; }
+
+  formLinks.innerHTML="";
+
+  deptForms[dept].forEach(item=>{
+    const a=document.createElement("a"); a.href=item.url; a.target="_blank"; a.textContent=item.text;
+    formLinks.appendChild(a);
+  });
+
+  formsDiv.style.display="block";
+  formsDiv.scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
