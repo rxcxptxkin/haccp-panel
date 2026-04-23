@@ -77,7 +77,7 @@ const deptForms = {
   ],
   fb:[
     { text:"BAR KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSe9iP1h2-MTi7ASwkg0FlM9ydyoxr2X8UzFBqXjmlv4WH0TjQ/viewform" },
-    { text:"BAR TEMİZLİK VE KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSev1FJrNL2PK97TeRi2x8KkX6eC56kzagjISt3SHZva_lgHcg/viewform" },
+    { text:"BAR TEMİZLİK", url:"https://docs.google.com/forms/d/e/1FAIpQLSev1FJrNL2PK97TeRi2x8KkX6eC56kzagjISt3SHZva_lgHcg/viewform" },
     { text:"BUZ MAKİNESİ TEMİZLİK VE KONTROL FORMU", url:"https://docs.google.com/forms/d/e/1FAIpQLSdX2xgqzr5gZiNXyjKtStJp5pZqfkspHu5T2fcDCQG-_59e8A/viewform" }
   ],
   hk:[
@@ -102,8 +102,68 @@ function login(){
   formLinks.innerHTML="";
 
   deptForms[dept].forEach(item=>{
-    const a=document.createElement("a"); a.href=item.url; a.target="_blank"; a.textContent=item.text;
-    formLinks.appendChild(a);
+    const container = document.createElement("div");
+
+    const a = document.createElement("a");
+    a.href = item.url;
+    a.target = "_blank";
+    a.textContent = item.text;
+
+    container.appendChild(a);
+
+    // 👉 BAR TEMİZLİK özel sistem
+    if(item.text === "BAR TEMİZLİK"){
+      const bars = ["BAR 1", "BAR 2", "BAR 3"];
+      const today = new Date().toLocaleDateString("tr-TR");
+
+      bars.forEach(bar=>{
+        const key = bar + "_" + today;
+
+        const row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.justifyContent = "space-between";
+        row.style.alignItems = "center";
+        row.style.maxWidth = "420px";
+        row.style.margin = "5px auto";
+        row.style.fontSize = "14px";
+        row.style.padding = "6px";
+        row.style.borderRadius = "6px";
+
+        const label = document.createElement("span");
+        label.textContent = bar + " (" + today + ")";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        // kayıtlıysa yükle
+        if(localStorage.getItem(key)){
+          checkbox.checked = true;
+          row.style.background = "green";
+          row.style.color = "#fff";
+        } else {
+          row.style.background = "#eee";
+        }
+
+        // değişince kaydet
+        checkbox.addEventListener("change", ()=>{
+          if(checkbox.checked){
+            localStorage.setItem(key, "ok");
+            row.style.background = "green";
+            row.style.color = "#fff";
+          } else {
+            localStorage.removeItem(key);
+            row.style.background = "#eee";
+            row.style.color = "#000";
+          }
+        });
+
+        row.appendChild(label);
+        row.appendChild(checkbox);
+        container.appendChild(row);
+      });
+    }
+
+    formLinks.appendChild(container);
   });
 
   formsDiv.style.display="block";
