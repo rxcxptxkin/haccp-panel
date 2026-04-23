@@ -90,84 +90,36 @@ const deptForms = {
 ]
 };
 
-function login(){
+function login() {
   const dept = document.getElementById("department").value;
   const pw = document.getElementById("password").value;
   const formsDiv = document.getElementById("forms");
   const formLinks = document.getElementById("formLinks");
 
-  if(!dept){ alert("Lütfen departman seçiniz!"); return; }
-  if(pw !== users[dept]){ alert("Hatalı parola!"); formsDiv.style.display="none"; return; }
+  if (!dept) {
+    alert("Lütfen departman seçiniz!");
+    return;
+  }
 
-  formLinks.innerHTML="";
+  if (pw !== users[dept]) {
+    alert("Hatalı parola!");
+    formsDiv.style.display = "none";
+    return;
+  }
 
-  deptForms[dept].forEach(item=>{
-    const container = document.createElement("div");
+  formLinks.innerHTML = "";
 
+  deptForms[dept].forEach(item => {
     const a = document.createElement("a");
     a.href = item.url;
     a.target = "_blank";
     a.textContent = item.text;
 
-    container.appendChild(a);
-
-    // 👉 BAR TEMİZLİK özel sistem
-    if(item.text === "BAR TEMİZLİK"){
-      const bars = ["BAR 1", "BAR 2", "BAR 3"];
-      const today = new Date().toLocaleDateString("tr-TR");
-
-      bars.forEach(bar=>{
-        const key = bar + "_" + today;
-
-        const row = document.createElement("div");
-        row.style.display = "flex";
-        row.style.justifyContent = "space-between";
-        row.style.alignItems = "center";
-        row.style.maxWidth = "420px";
-        row.style.margin = "5px auto";
-        row.style.fontSize = "14px";
-        row.style.padding = "6px";
-        row.style.borderRadius = "6px";
-
-        const label = document.createElement("span");
-        label.textContent = bar + " (" + today + ")";
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-
-        // kayıtlıysa yükle
-        if(localStorage.getItem(key)){
-          checkbox.checked = true;
-          row.style.background = "green";
-          row.style.color = "#fff";
-        } else {
-          row.style.background = "#eee";
-        }
-
-        // değişince kaydet
-        checkbox.addEventListener("change", ()=>{
-          if(checkbox.checked){
-            localStorage.setItem(key, "ok");
-            row.style.background = "green";
-            row.style.color = "#fff";
-          } else {
-            localStorage.removeItem(key);
-            row.style.background = "#eee";
-            row.style.color = "#000";
-          }
-        });
-
-        row.appendChild(label);
-        row.appendChild(checkbox);
-        container.appendChild(row);
-      });
-    }
-
-    formLinks.appendChild(container);
+    formLinks.appendChild(a);
   });
 
-  formsDiv.style.display="block";
-  formsDiv.scrollIntoView({behavior:"smooth"});
+  formsDiv.style.display = "block";
+  formsDiv.scrollIntoView({ behavior: "smooth" });
 }
 </script>
 
