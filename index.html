@@ -38,7 +38,7 @@
 
 <h2>HACCP FORMLARI TAKİP SİSTEMİ</h2>
 
-<div class="panel">
+<div class="panel" id="loginPanel">
   <label>Departman:</label>
   <select id="department">
     <option value="">Seçiniz</option>
@@ -119,6 +119,9 @@ function login() {
 
     formLinks.appendChild(a);
   });
+
+  // 👇 GİRİŞ PANELİNİ GİZLE
+  document.getElementById("loginPanel").style.display = "none";
 
   formsDiv.style.display = "block";
   formsDiv.scrollIntoView({ behavior: "smooth" });
