@@ -111,16 +111,33 @@ function login() {
 
   formLinks.innerHTML = "";
 
+  // 🔹 FORM LİNKLERİ
   deptForms[dept].forEach(item => {
     const a = document.createElement("a");
     a.href = item.url;
     a.target = "_blank";
     a.textContent = item.text;
-
     formLinks.appendChild(a);
   });
 
-  // 👇 GİRİŞ PANELİNİ GİZLE
+  // 🔹 SADECE MUTFAK İÇİN PLANLAR
+  if (dept === "mutfak") {
+    const planTitle = document.createElement("h3");
+    planTitle.textContent = "Planlar";
+    planTitle.style.textAlign = "center";
+    planTitle.style.marginTop = "20px";
+
+    formLinks.appendChild(planTitle);
+
+    const planLink = document.createElement("a");
+    planLink.href = "https://docs.google.com/document/d/1oQbEPtCVQrSxN4OksHfUo3kaLF6Sc27o/edit?usp=sharing&ouid=116852219320284631990&rtpof=true&sd=true";
+    planLink.target = "_blank";
+    planLink.textContent = "Mutfak Temizlik Planı";
+
+    formLinks.appendChild(planLink);
+  }
+
+  // 🔹 PANEL GİZLE
   document.getElementById("loginPanel").style.display = "none";
 
   formsDiv.style.display = "block";
