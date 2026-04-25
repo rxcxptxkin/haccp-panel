@@ -120,22 +120,32 @@ function login() {
     formLinks.appendChild(a);
   });
 
-  // 🔹 SADECE MUTFAK İÇİN PLANLAR
-  if (dept === "mutfak") {
-    const planTitle = document.createElement("h3");
-    planTitle.textContent = "Planlar";
-    planTitle.style.textAlign = "center";
-    planTitle.style.marginTop = "20px";
+if (dept === "mutfak" || dept === "fb") {
 
-    formLinks.appendChild(planTitle);
+  const planTitle = document.createElement("h3");
+  planTitle.textContent = "Planlar";
+  planTitle.style.textAlign = "center";
+  planTitle.style.marginTop = "20px";
 
-    const planLink = document.createElement("a");
+  formLinks.appendChild(planTitle);
+
+  const planLink = document.createElement("a");
+
+  // 🔽 MUTFAK VE FB AYRIMI
+  if(dept === "mutfak"){
     planLink.href = "https://docs.google.com/document/d/1oQbEPtCVQrSxN4OksHfUo3kaLF6Sc27o/edit?usp=sharing&ouid=116852219320284631990&rtpof=true&sd=true";
-    planLink.target = "_blank";
     planLink.textContent = "Mutfak Temizlik Planı";
-
-    formLinks.appendChild(planLink);
   }
+
+  if(dept === "fb"){
+    planLink.href = "https://docs.google.com/document/d/1II2nYoN2qVZsPcqV2MiU3BK9qdk2x7sr/edit?usp=sharing&ouid=116852219320284631990&rtpof=true&sd=true";
+    planLink.textContent = "F&B Temizlik Planı";
+  }
+
+  planLink.target = "_blank";
+
+  formLinks.appendChild(planLink);
+}
 
   // 🔹 PANEL GİZLE
   document.getElementById("loginPanel").style.display = "none";
