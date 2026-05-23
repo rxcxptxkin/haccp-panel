@@ -13,11 +13,37 @@
   .line::after{ content:""; position:absolute; top:-2px; left:50%; width:30px; height:4px; background:#f8f8f8; border-left:2px solid #b1975b; border-right:2px solid #b1975b; transform:translateX(-50%); }
   .main{ font-size:32px; font-weight:600; color:#7d7d7d; letter-spacing:3px; }
   .sub{ font-size:20px; color:#b1975b; margin-top:8px; }
-  .panel{ max-width:420px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:left; position:sticky; top:20px; }
+  .panel{ max-width:420px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:left;  }
   label{ display:block; margin-top:15px; font-weight:600; }
   select,input{ width:100%; padding:12px; font-size:16px; margin-top:5px; border-radius:6px; border:1px solid #ccc; box-sizing:border-box; }
   button{ width:100%; padding:12px; font-size:16px; margin-top:15px; background:#007BFF; color:#fff; border:none; border-radius:6px; cursor:pointer; }
   button:hover{ background:#0056b3; }
+  .guide-box{
+  background:#fff8e8;
+  border-left:5px solid #b1975b;
+  padding:15px;
+  border-radius:8px;
+  margin-top:10px;
+  white-space:pre-line;
+  font-size:14px;
+  line-height:1.7;
+  color:#555;
+  box-shadow:0 1px 4px rgba(0,0,0,0.08);
+  max-width:420px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:left;
+}
+  .logout-btn{
+  display:none;
+  background:#dc3545;
+  max-width:420px;
+  margin:20px auto 0 auto;
+}
+
+.logout-btn:hover{
+  background:#a71d2a;
+}
   #forms{ margin-top:30px; display:none; }
   #formLinks a{ display:block; width:100%; max-width:420px; padding:12px; margin:8px auto; background:#dae0e6; color:#7d7d7d; border-radius:6px; text-decoration:none; text-align:center; font-size:16px; }
   #formLinks a:hover{ background:#0056b3; color:#fff; }
@@ -56,9 +82,12 @@
 </div>
 
 <div id="forms">
-  <h3>Formlar</h3>
+  <h3 id="formsTitle" style="display:none;">Formlar</h3>
   <div id="formLinks"></div>
   <div id="kaliteTable"></div>
+  <button onclick="logout()" class="logout-btn">
+  Çıkış Yap
+</button>
 </div>
 
 <script>
@@ -94,7 +123,39 @@ const deptForms = {
     { text: "📅 HAFTALIK DENETİM FORMU", url: "https://docs.google.com/forms/d/e/1FAIpQLSfSAPzStoRMtUAcrVRzuY1QwoBNyCXaBIoF9Hvs2HijQhqLjA/viewform?usp=sharing&ouid=116852219320284631990"}
 ]
 };
+const deptGuides = {
 
+  teknik: `
+  • Teknik kontrol formu her gün doldurulmalıdır.
+  • Legionella formu günlük sıcaklık ölçümleriyle tamamlanır.
+  • Makine bakım formu bakım yapıldığında doldurulur.
+  • Eksik alan bırakılmamalıdır.
+  `,
+
+  mutfak: `
+  • Üretim formu her üretim sonunda doldurulmalıdır.
+  • Çözdürme işlemleri anlık kayıt edilmelidir.
+  • Meyve sebze dezenfeksiyonu günlük yapılmalıdır.
+  • Temizlik formları vardiya sonunda doldurulmalıdır.
+  `,
+
+  fb: `
+  • Bar kontrol formu günlük doldurulur.
+  • Buz makinesi kontrolü eksiksiz yapılmalıdır.
+  • Temizlik formu vardiya bitiminde tamamlanır.
+  `,
+
+  hk: `
+  • Legionella kontrolleri günlük yapılmalıdır.
+  • Ölçümler eksiksiz girilmelidir.
+  `,
+
+  kalite: `
+  • Dolap sıcaklıkları günlük kontrol edilmelidir.
+  • Haftalık denetim formu haftada 1 kez doldurulur.
+  • Eksik form takibi günlük yapılmalıdır.
+  `
+};
 function login() {
   const dept = document.getElementById("department").value;
   const pw = document.getElementById("password").value;
@@ -149,13 +210,61 @@ if (dept === "mutfak" || dept === "fb") {
 
   formLinks.appendChild(planLink);
 }
+// ÇİZGİ
 
-  // 🔹 PANEL GİZLE
+  const hr = document.createElement("hr");
+
+  hr.style.marginTop = "25px";
+  hr.style.border = "1px solid #ddd";
+
+  formLinks.appendChild(hr);
+
+  // KULLANIM TALİMATI
+
+  const guideTitle = document.createElement("h3");
+
+  guideTitle.textContent = "📘 Nasıl Kullanılır?";
+  guideTitle.style.textAlign = "center";
+  guideTitle.style.marginTop = "25px";
+
+  const guideBox = document.createElement("div");
+
+  guideBox.className = "guide-box";
+  guideBox.textContent = deptGuides[dept];
+
+  formLinks.appendChild(guideTitle);
+  formLinks.appendChild(guideBox);
+
+  // PANEL GİZLE
+
   document.getElementById("loginPanel").style.display = "none";
+  document.getElementById("formsTitle").style.display = "block";
+  document.querySelector(".logout-btn").style.display = "block";
 
   formsDiv.style.display = "block";
-  formsDiv.scrollIntoView({ behavior: "smooth" });
+
+  formsDiv.scrollIntoView({
+    behavior:"smooth"
+  });
+
 }
+
+function logout(){
+  location.reload();
+}
+
+// ENTER İLE GİRİŞ
+
+document
+.getElementById("password")
+.addEventListener("keypress", function(e){
+
+  if(e.key === "Enter"){
+    login();
+  }
+
+});
+
 </script>
 
 </body>
